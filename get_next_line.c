@@ -11,9 +11,32 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-int main()
+char	*get_next_line(int fd)
 {
+    char        *buff;
+    char        *dest;
+    static char *rest;
+    int         quantity;
 
+    if (fd < 0 || BUFFER_SIZE <= 0)
+        return (0);
+    buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    if (!buff)
+        return (NULL);
+    quantity = 1;
+    while (!(ft_strchr(rest, '\n')) && quantity != 0)
+    {
+        quantity = read(fd, buff, BUFFER_SIZE);
+        if (quantity == -1)
+        {
+            free(buff);
+        }
+        buff[quantity] = '\0';
+        rest = ft_strjoin(rest, buff);
+    }
+    free(buff);
+
+    return ()
 }
 
 
