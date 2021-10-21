@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 10:33:00 by schung            #+#    #+#             */
-/*   Updated: 2021/10/20 21:30:14 by schung           ###   ########.fr       */
+/*   Updated: 2021/10/21 17:51:11 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -41,30 +41,28 @@ int	ft_strlen(const char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char			*res;
-	unsigned int	len;
-	unsigned int	i;
-	unsigned int	k;
+	char	*res;
+	size_t	i;
+	size_t	j;
 
+	i = 0;
+	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	k = ft_strlen(s1);
-	len = k + ft_strlen(s2);
-	res = (char *)malloc(sizeof(char) * (len + 1));
+	res = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!res)
 		return (NULL);
-	i = 0;
-	while (i < k)
+	while (s1[i] != '\0')
 	{
 		res[i] = s1[i];
 		i++;
 	}
-	while (i < len)
+	while (s2[j] != '\0')
 	{
-		res[i] = *s2++;
-		i++;
+		res[i + j] = s2[j];
+		j++;
 	}
-	res[len] = '\0';
+	res[i + j] = '\0';
 	free(s1);
 	return (res);
 }

@@ -11,6 +11,16 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
+static char	*rest_check(char *src)
+{
+	if (!src)
+	{
+		src = malloc(sizeof(char) * 1);
+		src[0] = '\0';
+	}
+	return (src);
+}
+
 char	*get_next_line(int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
@@ -18,19 +28,16 @@ char	*get_next_line(int fd)
 	static char	*rest;
 	int			quantity;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 256)
 		return (0);
 	quantity = 1;
-	if (!rest)
-	{
-		rest = malloc(sizeof(char) * 1);
-		rest[0] = '\0';
-	}
+	rest = rest_check(rest);
 	while (!(ft_strchr(rest, '\n')) && quantity != 0)
 	{
 		quantity = read(fd, buff, BUFFER_SIZE);
 		if (quantity == -1)
 		{
+			free(rest);
 			return (NULL);
 		}
 		buff[quantity] = '\0';
